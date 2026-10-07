@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strategi Dakwah Rasulullah di Madinah</title>
+    <style>
+        :root {
+            --primary: #795548; /* Cokelat */
+            --primary-light: #A1887F;
+            --primary-dark: #4E342E;
+            --secondary: #D7CCC8; /* Putih kecokelatan/krem */
+            --bg-color: #EFEBE9;
+            --white: #FFFFFF;
+            --text-dark: #3E2723;
+            --success: #388E3C;
+            --warning: #FBC02D;
+            --danger: #D32F2F;
+            --shadow: 0 10px 25px rgba(121, 85, 72, 0.15);
+            --radius: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Tampilan Layar Utama */
+        .app-container {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .screen {
+            display: none;
+            width: 100%;
+            min-height: 100vh;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+            position: relative;
+            z-index: 10;
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Card Style */
+        .card {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            width: 100%;
+            max-width: 800px;
+            position: relative;
+            border-top: 6px solid var(--primary);
+        }
+
+        .card-header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px dashed var(--secondary);
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-dark);
+            line-height: 1.3;
+        }
+
+        p {
+            line-height: 1.7;
+            font-size: 1.05rem;
+            margin-bottom: 15px;
+        }
+
+        /* Buttons */
+        .btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--white);
+            border: none;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 10px rgba(78, 52, 46, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(78, 52, 46, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn:disabled {
+            background: var(--secondary);
+            color: #888;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Sampul (Cover) */
+        #screen-cover {
+            background: linear-gradient(180deg, var(--bg-color) 0%, var(--secondary) 100%);
+            overflow: hidden;
+        }
+
+        .cover-content {
+            text-align: center;
+            z-index: 20;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 40px 30px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            max-width: 600px;
+            backdrop-filter: blur(5px);
+        }
+
+        .cover-content h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            color: var(--primary-dark);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .cover-content h2 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .developer-badge {
+            background: var(--primary-light);
+            color: var(--white);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-top: 30px;
+            display: inline-block;
+        }
+
+        /* Unta Berjalan & Latar Pasir */
+        .desert-bg {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30vh;
+            z-index: 1;
+        }
+        
+        .desert-bg svg {
+            width: 100%;
+            height: 100%;
+            preserveAspectRatio: none;
+        }
+
+        .camel-container {
+            position: absolute;
+            bottom: 15vh;
+            left: -150px;
+            z-index: 5;
+            animation: camelWalkAcross 25s linear infinite;
+        }
+
+        .camel-body {
+            animation: camelBobbing 0.8s ease-in-out alternate infinite;
+        }
+
+        @keyframes camelWalkAcross {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(100vw + 300px)); }
+        }
+
+        @keyframes camelBobbing {
+            0% { transform: translateY(0) rotate(-1deg); }
+            100% { transform: translateY(-8px) rotate(1deg); }
+        }
+
+        /* Menu Utama */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .menu-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid var(--secondary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .menu-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(121, 85, 72, 0.2);
+            background: var(--primary);
+        }
+        
+        .menu-card h3 { transition: color 0.3s; }
+        .menu-card:hover h3, .menu-card:hover p { color: var(--white); }
+
+        .menu-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--bg-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            transition: all 0.3s;
+        }
+
+        .menu-card:hover .menu-icon {
+            background: var(--white);
+        }
+
+        /* Formulir */
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--primary-dark);
+        }
+
+        .input-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--secondary);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .input-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* Modal / Custom Alert */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(62, 39, 35, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            transform: scale(0.8);
+            transition: all 0.3s;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-icon {
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center; justify-content: center;
+            margin-bottom: 15px;
+            color: white;
+            font-size: 24px;
+        }
+        .modal-icon.success { background: var(--success); }
+        .modal-icon.info { background: var(--primary); }
+        .modal-icon.warning { background: var(--warning); }
+
+        /* Materi */
+        .slide-content {
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .slide-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--secondary);
+        }
+
+        .slide-indicator {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        /* Simulasi */
+        .sim-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .sim-tools {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 10px;
+            background: var(--secondary);
+            padding: 15px;
+            border-radius: 12px;
+        }
+
+        .sim-tool-btn {
+            background: var(--white);
+            border: 2px solid var(--primary);
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .sim-tool-btn:hover { background: var(--primary-light); color: white; }
+        .sim-tool-btn.used { opacity: 0.5; pointer-events: none; border-style: dashed; }
+
+        .sim-masjid-area {
+            border: 3px dashed var(--primary);
+            border-radius: 12px;
+            min-height: 200px;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 20px;
+            background: rgba(255,255,255,0.5);
+            position: relative;
+        }
+
+        .sim-slot {
+            width: 100px;
+            height: 100px;
+            border: 2px dashed #bbb;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-size: 0.8rem;
+            text-align: center;
+            transition: all 0.5s;
+        }
+
+        .sim-slot.filled {
+            border: 2px solid var(--success);
+            background: #E8F5E9;
+            color: var(--success);
+            transform: scale(1.05);
+        }
+
+        .sim-slot svg { width: 40px; height: 40px; margin-bottom: 5px; fill: currentColor; }
+
+        /* Evaluasi (Quiz) */
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--secondary);
+        }
+        
+        .quiz-badge {
+            background: var(--primary-light);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--primary-dark);
+        }
+
+        /* Opsi Pilihan Ganda & Benar Salah */
+        .option-label {
+            display: block;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: var(--bg-color);
+            border: 2px solid transparent;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .option-label:hover { background: var(--secondary); }
+        .option-label.selected {
+            background: #FFF3E0;
+            border-color: var(--primary);
+        }
+        
+        .option-label input { width: 20px; height: 20px; accent-color: var(--primary); }
+
+        /* Menjodohkan (Matching) */
+        .matching-row {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+            background: var(--bg-color);
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        @media (min-width: 600px) {
+            .matching-row { flex-direction: row; align-items: center; justify-content: space-between; }
+            .matching-left { width: 45%; }
+            .matching-right { width: 50%; }
+        }
+
+        .matching-left { font-weight: bold; color: var(--primary-dark); }
+        .matching-select { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--primary-light); }
+
+        /* Hasil & Pembahasan */
+        .score-circle {
+            width: 150px; height: 150px;
+            border-radius: 50%;
+            background: var(--white);
+            border: 8px solid var(--primary);
+            display: flex;
+            align-items: center; justify-content: center;
+            font-size: 3rem; font-weight: bold;
+            color: var(--primary-dark);
+            margin: 0 auto 20px auto;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        .discussion-item {
+            background: var(--bg-color);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 5px solid var(--primary);
+            text-align: left;
+        }
+        .discussion-item.correct { border-left-color: var(--success); }
+        .discussion-item.wrong { border-left-color: var(--danger); }
+        
+        .discuss-ans { margin-top: 10px; padding: 10px; background: white; border-radius: 8px; font-size: 0.95rem; }
+        .discuss-reason { margin-top: 10px; font-style: italic; color: #555; }
+
+        /* Utility */
+        .text-center { text-align: center; }
+        .mt-3 { margin-top: 15px; }
+        .mt-4 { margin-top: 20px; }
+        
+        /* Status pengiriman database */
+        .sync-status {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* SVG Icons Inline Classes */
+        .icon { width: 24px; height: 24px; fill: currentColor; }
+    </style>
+</head>
+<body>
+
+    <div id="screen-cover" class="screen active">
+        <!-- Elemen Latar Pasir -->
+        <div class="desert-bg">
+            <svg viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg">
+                <path fill="#D7CCC8" fill-opacity="1" d="M0,192L48,197.3C96,203,192,213,288,208C384,203,480,181,576,181.3C672,181,768,203,864,213.3C960,224,1056,224,1152,213.3C1248,203,1344,181,1392,170.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+        </div>
+        
+        <!-- Animasi Unta Berjalan -->
+        <div class="camel-container">
+            <svg class="camel-body" width="120" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M75,35 Q80,25 90,30 Q98,35 95,45 L90,50 L90,55 Q85,60 80,55 L80,45 L75,50 Z" fill="#795548"/>
+                <path d="M20,50 Q35,25 50,45 Q65,25 80,45 L80,65 L20,65 Z" fill="#795548"/>
+                <rect x="25" y="65" width="6" height="25" rx="3" fill="#4E342E" />
+                <rect x="35" y="65" width="6" height="25" rx="3" fill="#795548" />
+                <rect x="65" y="65" width="6" height="25" rx="3" fill="#4E342E" />
+                <rect x="75" y="65" width="6" height="25" rx="3" fill="#795548" />
+                <path d="M20,50 Q15,55 20,65" stroke="#795548" stroke-width="4" fill="none"/>
+            </svg>
+        </div>
+
+        <div class="cover-content">
+            <h2>Media Pembelajaran Interaktif (MPI)</h2>
+            <h1>Strategi Dakwah Rasulullah di Madinah</h1>
+            <p><strong>Mata Pelajaran:</strong> Sejarah Kebudayaan Islam (SKI)<br><strong>Fase/Kelas:</strong> C / 5 Madrasah Ibtidaiyah<br><strong>Fokus:</strong> Bidang Agama</p>
+            
+            <div class="tp-box" style="background: rgba(121, 85, 72, 0.08); border-left: 4px solid var(--primary); padding: 12px 15px; margin: 15px 0; border-radius: 8px; text-align: left; font-size: 0.93rem; line-height: 1.5;">
+                <strong style="color: var(--primary-dark); display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                    <svg style="width:18px;height:18px;fill:var(--primary);" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    Tujuan Pembelajaran:
+                </strong>
+                <span>Siswa dapat memahami dan menjelaskan strategi dakwah Rasulullah Saw. di Madinah sebagai wujud cinta terhadap Allah dan Rasul-Nya.</span>
+            </div>
+
+            <button class="btn mt-4" onclick="navTo('screen-menu')">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> Mulai Presentasi
+            </button>
+            
+            <div class="developer-badge">
+                Dikembangkan oleh: <strong>Ferlanda Una</strong><br>Instansi: MIS Al-Falah
+            </div>
+        </div>
+    </div>
+
+    <div id="screen-menu" class="screen">
+        <div class="card">
+            <div class="card-header">
+                <h2>Menu Utama</h2>
+                <p>Silakan pilih modul pembelajaran di bawah ini</p>
+            </div>
+            
+            <div class="menu-grid">
+                <div class="menu-card" onclick="startMateri()">
+                    <div class="menu-icon">
+                        <svg class="icon" style="width: 40px; height: 40px;" viewBox="0 0 24 24"><path d="M21 4H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zM7 6h14v14H7V6zm-4 4v10a2 2 0 0 0 2 2h2v-2H5V10h-2z"/></svg>
+                    </div>
+                    <div>
+                        <h3>Materi Pembelajaran</h3>
+                        <p style="font-size: 0.9rem; margin-bottom: 0;">Pelajari strategi dakwah Rasulullah</p>
+                    </div>
+                </div>
+                
+                <div class="menu-card" onclick="startSimulasi()">
+                    <div class="menu-icon">
+                        <svg class="icon" style="width: 40px; height: 40px;" viewBox="0 0 24 24"><path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h4l2 2h6l2-2h4c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm9-1c-.83 0-1.5-.67-1.5-1.5S19.17 9 20 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm-3 3c-.83 0-1.5-.67-1.5-1.5S16.17 12 17 12s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+                    </div>
+                    <div>
+                        <h3>Simulasi Interaktif</h3>
+                        <p style="font-size: 0.9rem; margin-bottom: 0;">Bantu merancang fungsi masjid</p>
+                    </div>
+                </div>
+
+                <div class="menu-card" onclick="navTo('screen-login')">
+                    <div class="menu-icon">
+                        <svg class="icon" style="width: 40px; height: 40px;" viewBox="0 0 24 24"><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm-2 14l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+                    </div>
+                    <div>
+                        <h3>Evaluasi Kuis</h3>
+                        <p style="font-size: 0.9rem; margin-bottom: 0;">Uji pemahamanmu di sini</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <button class="btn btn-outline" onclick="navTo('screen-cover')">Kembali ke Sampul</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="screen-materi" class="screen">
+        <div class="card">
+            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: none; padding-bottom: 0;">
+                <h3 style="margin: 0;" id="materi-title">Judul Materi</h3>
+                <span class="quiz-badge" id="materi-badge">Slide 1 / 5</span>
+            </div>
+            <hr style="border: 1px dashed var(--secondary); margin: 15px 0;">
+            
+            <div class="slide-content" id="materi-content">
+                <!-- Konten dinamis JavaScript -->
+            </div>
+
+            <div class="slide-controls">
+                <button class="btn btn-outline" id="btn-prev-materi" onclick="prevSlide()">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/></svg> Sebelumnya
+                </button>
+                <button class="btn" id="btn-next-materi" onclick="nextSlide()">
+                    Selanjutnya <svg class="icon" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+                </button>
+                <button class="btn btn-outline" id="btn-finish-materi" onclick="navTo('screen-menu')" style="display: none;">
+                    Selesai & Kembali Menu
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="screen-simulasi" class="screen">
+        <div class="card">
+            <div class="card-header">
+                <h2>Simulasi: Membangun Pusat Dakwah</h2>
+                <p>Klik tombol fungsi di bawah ini untuk melihat bagaimana Rasulullah menjadikan Masjid Nabawi sebagai pusat peradaban Islam di Madinah!</p>
+            </div>
+
+            <div class="sim-container">
+                <div class="sim-tools">
+                    <button class="sim-tool-btn" id="sim-btn-ibadah" onclick="placeSimElement('ibadah')">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+                        Fungsi Ibadah
+                    </button>
+                    <button class="sim-tool-btn" id="sim-btn-pendidikan" onclick="placeSimElement('pendidikan')">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M21 4H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zM7 6h14v14H7V6zm-4 4v10a2 2 0 0 0 2 2h2v-2H5V10h-2z"/></svg>
+                        Fungsi Pendidikan
+                    </button>
+                    <button class="sim-tool-btn" id="sim-btn-musyawarah" onclick="placeSimElement('musyawarah')">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                        Fungsi Sosial/Musyawarah
+                    </button>
+                </div>
+
+                <div class="sim-masjid-area">
+                    <h3 style="position: absolute; top: 10px; width: 100%; text-align: center; color: #aaa; font-size: 1rem;">Area Masjid Nabawi</h3>
+                    <div class="sim-slot" id="slot-ibadah">Kosong</div>
+                    <div class="sim-slot" id="slot-pendidikan">Kosong</div>
+                    <div class="sim-slot" id="slot-musyawarah">Kosong</div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <button class="btn btn-outline" onclick="navTo('screen-menu')">Kembali ke Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="screen-login" class="screen">
+        <div class="card" style="max-width: 500px;">
+            <div class="card-header">
+                <h2>Evaluasi Pembelajaran</h2>
+                <p>Isi data diri sebelum memulai kuis</p>
+            </div>
+            
+            <div class="input-group">
+                <label for="student-name">Nama Lengkap</label>
+                <input type="text" id="student-name" class="input-control" placeholder="Masukkan nama kamu...">
+            </div>
+            
+            <div class="input-group">
+                <label for="student-class">Kelas</label>
+                <select id="student-class" class="input-control">
+                    <option value="">-- Pilih Kelas --</option>
+                    <option value="5A">Kelas 5A</option>
+                    <option value="5B">Kelas 5B</option>
+                    <option value="5C">Kelas 5C</option>
+                </select>
+            </div>
+
+            <div class="text-center mt-4">
+                <button class="btn btn-outline mr-2" onclick="navTo('screen-menu')">Batal</button>
+                <button class="btn" onclick="validateLogin()">Mulai Kuis</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="screen-quiz" class="screen">
+        <div class="card">
+            <div class="quiz-header">
+                <div>
+                    <span style="font-size: 0.9rem; color: #666;" id="quiz-student-info">Nama - Kelas</span>
+                </div>
+                <div class="quiz-badge" id="quiz-progress">Soal 1 / 10</div>
+            </div>
+            
+            <div id="quiz-container">
+                <!-- Tempat Soal Dinamis -->
+            </div>
+
+            <div class="text-center mt-4">
+                <button class="btn btn-outline" id="btn-prev-quiz" onclick="prevQuestion()" style="display: none;">Sebelumnya</button>
+                <button class="btn" id="btn-next-quiz" onclick="nextQuestion()">Selanjutnya</button>
+                <button class="btn" id="btn-finish-quiz" onclick="submitQuiz()" style="display: none;">Selesaikan Kuis</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="screen-result" class="screen">
+        <div class="card">
+            <div class="card-header">
+                <h2>Hasil Evaluasi</h2>
+                <p id="result-student-info">Nama - Kelas</p>
+            </div>
+            
+            <div class="score-circle" id="result-score">0</div>
+            <h3 class="text-center" id="result-message" style="margin-bottom: 25px;">Pesan</h3>
+
+            <div id="sync-status-msg" class="sync-status text-center"></div>
+
+            <div class="text-center mt-4">
+                <button class="btn btn-outline" onclick="navTo('screen-menu')">Kembali ke Menu</button>
+                <button class="btn" onclick="showDiscussion()">Lihat Pembahasan Lengkap</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="screen-discussion" class="screen">
+        <div class="card" style="max-height: 90vh; display: flex; flex-direction: column;">
+            <div class="card-header" style="flex-shrink: 0;">
+                <h2>Pembahasan Soal</h2>
+            </div>
+            
+            <div id="discussion-container" style="overflow-y: auto; padding-right: 10px; flex-grow: 1;">
+                <!-- Pembahasan Dinamis -->
+            </div>
+
+            <div class="text-center mt-4" style="flex-shrink: 0; padding-top: 15px;">
+                <button class="btn" onclick="navTo('screen-menu')">Selesai & Kembali ke Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="custom-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div id="modal-icon-container" class="modal-icon">
+                <!-- Icon dinamis -->
+            </div>
+            <h3 id="modal-title" style="margin-bottom: 10px;">Judul</h3>
+            <p id="modal-message">Pesan teks</p>
+            <button class="btn mt-3" onclick="closeModal()">Tutup / Lanjutkan</button>
+        </div>
+    </div>
+
+    <script>
+        // =========================================================================
+        // PENGATURAN BACKEND GOOGLE APPS SCRIPT DATABASE SPREADSHEET
+        // Tempelkan Web App URL hasil Deploy Google Apps Script Anda di dalam tanda kutip berikut:
+        // =========================================================================
+        const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx2uENK0PcRSpVQOiVGcAGe0W9FFvUa49JS7uMdURQy8I_ALXzli7uXu0ECPpMTbG0/exec";
+
+        // --- DATA MATERI ---
+        const materiData = [
+            {
+                title: "Awal Kedatangan di Madinah",
+                content: `
+                    <p>Setelah menempuh perjalanan hijrah yang penuh rintangan dari Mekah, Rasulullah SAW tiba di kota Yatsrib (yang kemudian namanya diubah menjadi Madinah).</p>
+                    <p>Beliau disambut dengan penuh suka cita dan kerinduan oleh penduduk asli Madinah yang dikenal sebagai <strong>Kaum Anshar</strong> (kaum penolong). Mereka dengan ikhlas menawarkan tempat tinggal dan berbagi harta kepada kaum <strong>Muhajirin</strong> (yang berhijrah).</p>
+                    <p>Di Madinah inilah babak baru penyebaran agama Islam dimulai dengan fokus membangun fondasi keimanan bermasyarakat yang kuat berlandaskan cinta kepada Allah SWT dan Rasul-Nya.</p>
+                `
+            },
+            {
+                title: "Langkah Pertama: Membangun Masjid",
+                content: `
+                    <p>Strategi utama Rasulullah SAW di bidang agama sesampainya di Madinah bukanlah membangun benteng atau pasar, melainkan <strong>membangun Masjid</strong>.</p>
+                    <p>Masjid pertama yang dibangun setibanya di pinggiran Madinah adalah Masjid Quba, kemudian disusul dengan pembangunan <strong>Masjid Nabawi</strong> di pusat kota Madinah.</p>
+                    <p>Pembangunan masjid ini dilakukan secara bergotong royong oleh kaum Muhajirin dan Anshar, menumbuhkan rasa persaudaraan dan kebersamaan yang kokoh di antara mereka.</p>
+                `
+            },
+            {
+                title: "Fungsi Multiguna Masjid Nabawi",
+                content: `
+                    <p>Pada masa Rasulullah, Masjid Nabawi tidak hanya difungsikan sebagai tempat shalat (ibadah mahdhah) saja, tetapi memiliki fungsi yang sangat luas:</p>
+                    <ul>
+                        <li style="margin-bottom:8px;"><strong>Pusat Ibadah:</strong> Tempat melaksanakan shalat berjamaah dan zikir.</li>
+                        <li style="margin-bottom:8px;"><strong>Pusat Pendidikan:</strong> Tempat Rasulullah mengajarkan wahyu Al-Qur'an dan ilmu agama.</li>
+                        <li style="margin-bottom:8px;"><strong>Pusat Musyawarah:</strong> Tempat menyelesaikan perkara umat dan menyusun strategi dakwah.</li>
+                        <li style="margin-bottom:8px;"><strong>Fungsi Sosial:</strong> Menjadi tempat tinggal sementara bagi para sahabat miskin yang disebut <em>Ahlus Suffah</em>.</li>
+                    </ul>
+                `
+            },
+            {
+                title: "Mengajarkan Agama dengan Hikmah",
+                content: `
+                    <p>Dalam menyebarkan Islam di Madinah, Rasulullah menggunakan strategi yang penuh kedamaian, hikmah, dan keteladanan (akhlakul karimah).</p>
+                    <p>Beliau tidak pernah memaksakan agama kepada penduduk asli maupun kaum Yahudi di Madinah. Dakwah dipusatkan di masjid dan juga merambah ke rumah-rumah penduduk dengan pendekatan yang lembut.</p>
+                    <p>Selain ilmu agama (Tauhid, fiqih), Rasulullah juga mengajarkan ilmu tentang kemasyarakatan, muamalah, dan sejarah, membuktikan bahwa ajaran Islam mencakup seluruh aspek kehidupan.</p>
+                `
+            },
+            {
+                title: "Tujuan & Keteladanan",
+                content: `
+                    <p>Tujuan utama strategi dakwah Rasulullah di bidang agama ini adalah untuk <strong>memperkuat keimanan (aqidah)</strong> dan ketaqwaan umat kepada Allah SWT.</p>
+                    <p><strong>Apa yang bisa kita teladani?</strong></p>
+                    <ul>
+                        <li>Turut serta memakmurkan masjid/mushala di sekolah atau lingkungan rumah.</li>
+                        <li>Giat dan semangat dalam menuntut ilmu agama.</li>
+                        <li>Menjaga kerukunan dan persaudaraan dengan teman, seperti kaum Muhajirin dan Anshar.</li>
+                    </ul>
+                `
+            }
+        ];
+
+        // --- DATA SOAL KUIS (10 Soal Beragam) ---
+        const quizData = [
+            {
+                type: "mcq",
+                question: "Langkah pertama yang dilakukan Rasulullah SAW setibanya di Madinah dalam bidang agama adalah...",
+                options: ["Membangun pasar untuk ekonomi", "Membangun masjid sebagai pusat ibadah", "Membentuk pasukan laskar perang", "Membangun istana pemerintahan"],
+                correct: 1,
+                discussion: "Setibanya di Madinah, langkah prioritas pertama Rasulullah di bidang agama adalah membangun masjid (Masjid Quba dan Masjid Nabawi) sebagai fondasi pembinaan umat."
+            },
+            {
+                type: "mcq",
+                question: "Masjid utama yang dibangun Rasulullah di pusat kota Madinah yang menjadi pusat segala aktivitas dakwah bernama...",
+                options: ["Masjidil Haram", "Masjid Quba", "Masjid Nabawi", "Masjidil Aqsa"],
+                correct: 2,
+                discussion: "Masjid Nabawi adalah masjid utama yang dibangun di pusat kota Madinah, yang fungsinya sangat vital dalam peradaban awal Islam."
+            },
+            {
+                type: "tf",
+                question: "Benar atau Salah: Pada masa Rasulullah, Masjid Nabawi HANYA digunakan khusus untuk melaksanakan ibadah shalat lima waktu saja.",
+                options: ["Benar", "Salah"],
+                correct: 1, // Salah (index 1)
+                discussion: "Pernyataan ini <strong>Salah</strong>. Masjid Nabawi memiliki multifungsi, tidak hanya untuk shalat, tapi juga untuk pendidikan, musyawarah, dan kegiatan sosial."
+            },
+            {
+                type: "complex_mcq",
+                question: "Pilih 3 (tiga) fungsi utama Masjid Nabawi pada masa awal dakwah Rasulullah di Madinah!",
+                options: [
+                    "Tempat melaksanakan ibadah shalat berjamaah",
+                    "Pusat perbelanjaan dan jual beli barang",
+                    "Tempat Rasulullah mengajarkan ilmu agama",
+                    "Pusat musyawarah untuk menyelesaikan urusan umat"
+                ],
+                correct: [0, 2, 3], // Multiple correct answers
+                discussion: "Fungsi utama Masjid Nabawi adalah sebagai pusat ibadah (0), pusat pendidikan (2), dan pusat musyawarah/pemerintahan (3). Bukan untuk pasar/perdagangan."
+            },
+            {
+                type: "matching",
+                question: "Jodohkan fungsi Masjid Nabawi dengan contoh kegiatan yang tepat!",
+                pairs: [
+                    { left: "Fungsi Ibadah", rightOptions: ["Mengajarkan baca tulis Al-Qur'an", "Melaksanakan shalat berjamaah 5 waktu", "Tempat tinggal sahabat Ahlus Suffah"], correctRight: 1 },
+                    { left: "Fungsi Pendidikan", rightOptions: ["Mengajarkan baca tulis Al-Qur'an", "Melaksanakan shalat berjamaah 5 waktu", "Tempat tinggal sahabat Ahlus Suffah"], correctRight: 0 },
+                    { left: "Fungsi Sosial", rightOptions: ["Mengajarkan baca tulis Al-Qur'an", "Melaksanakan shalat berjamaah 5 waktu", "Tempat tinggal sahabat Ahlus Suffah"], correctRight: 2 }
+                ],
+                discussion: "Fungsi Ibadah (Shalat), Fungsi Pendidikan (Mengajarkan Al-Qur'an/Ilmu), Fungsi Sosial (Menampung Ahlus Suffah yang miskin)."
+            },
+            {
+                type: "mcq",
+                question: "Penduduk Madinah yang dengan ikhlas menyambut dan menolong Rasulullah beserta kaum Muhajirin disebut...",
+                options: ["Kaum Quraisy", "Kaum Yahudi", "Kaum Khazraj", "Kaum Anshar"],
+                correct: 3,
+                discussion: "Penduduk Madinah yang beriman dan menolong dakwah Nabi disebut kaum <strong>Anshar</strong> (penolong)."
+            },
+            {
+                type: "tf",
+                question: "Benar atau Salah: Rasulullah berdakwah di Madinah dengan cara memaksa penduduknya agar segera memeluk agama Islam.",
+                options: ["Benar", "Salah"],
+                correct: 1, // Salah
+                discussion: "Pernyataan ini <strong>Salah</strong>. Dakwah Rasulullah dilakukan dengan penuh hikmah, kedamaian, dan memberikan teladan yang baik (akhlakul karimah), bukan dengan paksaan."
+            },
+            {
+                type: "mcq",
+                question: "Bagi para sahabat miskin yang hijrah namun tidak memiliki harta dan tempat tinggal, Rasulullah menyediakan tempat di serambi Masjid Nabawi. Mereka ini dikenal dengan sebutan...",
+                options: ["Ahlus Suffah", "Ahlul Bait", "Khulafaur Rasyidin", "Tabi'in"],
+                correct: 0,
+                discussion: "Para sahabat miskin yang tinggal di serambi (shuffah) masjid disebut <strong>Ahlus Suffah</strong>. Salah satu tokohnya adalah Abu Hurairah."
+            },
+            {
+                type: "complex_mcq",
+                question: "Nilai-nilai keteladanan dari strategi dakwah Rasulullah di bidang agama yang patut kita terapkan di sekolah adalah... (Pilih 2 jawaban yang tepat)",
+                options: [
+                    "Suka memusuhi teman yang berbeda agama/pendapat",
+                    "Semangat dan giat belajar ilmu agama maupun ilmu umum",
+                    "Menyimpan ilmu pengetahuan hanya untuk diri sendiri",
+                    "Turut serta memakmurkan mushala sekolah dengan shalat berjamaah"
+                ],
+                correct: [1, 3],
+                discussion: "Nilai yang patut diteladani adalah giat belajar (1) seperti fungsi pendidikan masjid, dan memakmurkan mushala (3) seperti fungsi ibadah."
+            },
+            {
+                type: "mcq",
+                question: "Tujuan utama Rasulullah SAW membina masyarakat Madinah di bidang agama adalah untuk...",
+                options: ["Menguasai harta kekayaan penduduk Madinah", "Membangun pasukan perang terkuat di jazirah Arab", "Memperkuat keimanan dan wujud cinta kepada Allah SWT", "Menjadi raja yang berkuasa penuh atas kota Madinah"],
+                correct: 2,
+                discussion: "Fokus utama dakwah agama di Madinah adalah untuk menanamkan aqidah dan memperkuat keimanan masyarakat sebagai wujud kecintaan kepada Allah dan Rasul-Nya."
+            }
+        ];
+
+        // --- STATE VARIABLES ---
+        let currentSlide = 0;
+        let simProgress = 0;
+        
+        let studentData = { name: '', class: '' };
+        let currentQuizIndex = 0;
+        let userAnswers = new Array(10).fill(null);
+        let quizScore = 0;
+
+        // --- NAVIGATION LOGIC ---
+        function navTo(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+            window.scrollTo(0,0);
+            
+            // Trigger initializers based on screen
+            if (screenId === 'screen-materi') initMateri();
+            if (screenId === 'screen-simulasi') resetSimulasi();
+        }
+
+        // --- MODAL UTILS ---
+        function showModal(title, message, type = 'info') {
+            document.getElementById('modal-title').innerHTML = title;
+            document.getElementById('modal-message').innerHTML = message;
+            
+            let iconHtml = '';
+            if (type === 'success') iconHtml = '<svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>';
+            else if (type === 'warning') iconHtml = '<svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>';
+            else iconHtml = '<svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor"><path d="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg>';
+            
+            const iconContainer = document.getElementById('modal-icon-container');
+            iconContainer.className = `modal-icon ${type}`;
+            iconContainer.innerHTML = iconHtml;
+            
+            document.getElementById('custom-modal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('custom-modal').classList.remove('active');
+        }
+
+        // --- MATERI LOGIC ---
+        function startMateri() {
+            currentSlide = 0;
+            navTo('screen-materi');
+        }
+
+        function initMateri() {
+            renderSlide();
+        }
+
+        function renderSlide() {
+            const data = materiData[currentSlide];
+            document.getElementById('materi-title').innerHTML = data.title;
+            document.getElementById('materi-badge').innerHTML = `Slide ${currentSlide + 1} / ${materiData.length}`;
+            document.getElementById('materi-content').innerHTML = data.content;
+
+            document.getElementById('btn-prev-materi').style.display = currentSlide === 0 ? 'none' : 'inline-flex';
+            
+            if (currentSlide === materiData.length - 1) {
+                document.getElementById('btn-next-materi').style.display = 'none';
+                document.getElementById('btn-finish-materi').style.display = 'inline-flex';
+            } else {
+                document.getElementById('btn-next-materi').style.display = 'inline-flex';
+                document.getElementById('btn-finish-materi').style.display = 'none';
+            }
+        }
+
+        function nextSlide() {
+            if (currentSlide < materiData.length - 1) { currentSlide++; renderSlide(); }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) { currentSlide--; renderSlide(); }
+        }
+
+        // --- SIMULASI LOGIC ---
+        function startSimulasi() {
+            navTo('screen-simulasi');
+        }
+
+        function resetSimulasi() {
+            simProgress = 0;
+            ['ibadah', 'pendidikan', 'musyawarah'].forEach(id => {
+                document.getElementById(`sim-btn-${id}`).classList.remove('used');
+                let slot = document.getElementById(`slot-${id}`);
+                slot.className = 'sim-slot';
+                slot.innerHTML = 'Kosong';
+            });
+        }
+
+        function placeSimElement(type) {
+            // Disable button
+            document.getElementById(`sim-btn-${type}`).classList.add('used');
+            
+            // Update slot UI
+            let slot = document.getElementById(`slot-${type}`);
+            slot.classList.add('filled');
+            
+            let iconHtml, label, feedbackText;
+            if (type === 'ibadah') {
+                iconHtml = '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>';
+                label = 'Pusat Ibadah';
+                feedbackText = "<strong>Tepat Sekali!</strong> Masjid didirikan pertama kali untuk mengukuhkan ibadah mahdhah (seperti shalat berjamaah) guna meningkatkan ketaqwaan kepada Allah.";
+            } else if (type === 'pendidikan') {
+                iconHtml = '<svg viewBox="0 0 24 24"><path d="M21 4H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zM7 6h14v14H7V6zm-4 4v10a2 2 0 0 0 2 2h2v-2H5V10h-2z"/></svg>';
+                label = 'Pusat Pendidikan';
+                feedbackText = "<strong>Benar!</strong> Di masjid inilah Rasulullah secara intensif membacakan wahyu Al-Qur'an dan mengajarkan berbagai ilmu agama kepada para sahabat.";
+            } else {
+                iconHtml = '<svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>';
+                label = 'Pusat Musyawarah';
+                feedbackText = "<strong>Luar Biasa!</strong> Masjid juga berfungsi sebagai sentral kegiatan sosial masyarakat, tempat merundingkan strategi dan menyelesaikan perkara umat secara damai.";
+            }
+            
+            slot.innerHTML = iconHtml + `<span>${label}</span>`;
+            simProgress++;
+            
+            // Show Feedback
+            showModal('Fungsi Ditambahkan', feedbackText, 'success');
+            
+            // Check Completion
+            if (simProgress === 3) {
+                setTimeout(() => {
+                    showModal('Simulasi Selesai!', 'Alhamdulillah! Kamu telah berhasil menempatkan seluruh elemen. Ini membuktikan bahwa Masjid Nabawi pada masa Rasulullah benar-benar menjadi pusat pembinaan agama dan peradaban yang komprehensif.', 'success');
+                }, 2000);
+            }
+        }
+
+        // --- KUIS LOGIC ---
+        function validateLogin() {
+            const name = document.getElementById('student-name').value.trim();
+            const cls = document.getElementById('student-class').value;
+            
+            if (!name || !cls) {
+                showModal('Peringatan', 'Harap isi Nama dan Kelas terlebih dahulu!', 'warning');
+                return;
+            }
+            
+            studentData = { name, class: cls };
+            
+            // Reset Quiz State
+            currentQuizIndex = 0;
+            userAnswers = new Array(10).fill(null);
+            
+            document.getElementById('quiz-student-info').innerText = `${name} - ${cls}`;
+            navTo('screen-quiz');
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const q = quizData[currentQuizIndex];
+            document.getElementById('quiz-progress').innerText = `Soal ${currentQuizIndex + 1} / 10`;
+            
+            let html = `<div class="question-text">${q.question}</div>`;
+            
+            // Render specific inputs based on type
+            if (q.type === 'mcq' || q.type === 'tf') {
+                q.options.forEach((opt, idx) => {
+                    const isChecked = userAnswers[currentQuizIndex] === idx ? 'checked' : '';
+                    const isSelectedClass = isChecked ? 'selected' : '';
+                    
+                    html += `
+                        <label class="option-label ${isSelectedClass}" onclick="selectOption(this, 'mcq')">
+                            <input type="radio" name="q${currentQuizIndex}" value="${idx}" ${isChecked} onchange="saveAnswer(${idx})">
+                            <span>${opt}</span>
+                        </label>
+                    `;
+                });
+            } else if (q.type === 'complex_mcq') {
+                html += `<p style="font-size:0.9rem; color:#666; margin-top:-10px; margin-bottom:15px;"><em>(Pilih beberapa jawaban)</em></p>`;
+                let savedArr = userAnswers[currentQuizIndex] || [];
+                
+                q.options.forEach((opt, idx) => {
+                    const isChecked = savedArr.includes(idx) ? 'checked' : '';
+                    const isSelectedClass = isChecked ? 'selected' : '';
+                    
+                    html += `
+                        <label class="option-label ${isSelectedClass}" onclick="selectOption(this, 'complex')">
+                            <input type="checkbox" name="q${currentQuizIndex}" value="${idx}" ${isChecked} onchange="saveComplexAnswer()">
+                            <span>${opt}</span>
+                        </label>
+                    `;
+                });
+            } else if (q.type === 'matching') {
+                html += `<p style="font-size:0.9rem; color:#666; margin-top:-10px; margin-bottom:15px;"><em>(Pilih pasangan yang tepat pada kotak)</em></p>`;
+                let savedArr = userAnswers[currentQuizIndex] || new Array(q.pairs.length).fill("");
+                
+                q.pairs.forEach((pair, pairIdx) => {
+                    html += `
+                        <div class="matching-row">
+                            <div class="matching-left">${pair.left}</div>
+                            <div class="matching-right">
+                                <select class="matching-select" data-pair-idx="${pairIdx}" onchange="saveMatchingAnswer()">
+                                    <option value="">-- Pilih Pasangan --</option>
+                    `;
+                    pair.rightOptions.forEach((opt, optIdx) => {
+                        const isSelected = savedArr[pairIdx] === optIdx ? 'selected' : '';
+                        html += `<option value="${optIdx}" ${isSelected}>${opt}</option>`;
+                    });
+                    html += `</select></div></div>`;
+                });
+            }
+
+            document.getElementById('quiz-container').innerHTML = html;
+            
+            // Buttons logic
+            document.getElementById('btn-prev-quiz').style.display = currentQuizIndex === 0 ? 'none' : 'inline-block';
+            
+            if (currentQuizIndex === quizData.length - 1) {
+                document.getElementById('btn-next-quiz').style.display = 'none';
+                document.getElementById('btn-finish-quiz').style.display = 'inline-block';
+            } else {
+                document.getElementById('btn-next-quiz').style.display = 'inline-block';
+                document.getElementById('btn-finish-quiz').style.display = 'none';
+            }
+        }
+
+        function selectOption(labelEl, type) {
+            if (type === 'mcq') {
+                const siblings = labelEl.parentElement.querySelectorAll('.option-label');
+                siblings.forEach(s => s.classList.remove('selected'));
+                labelEl.classList.add('selected');
+            } else if (type === 'complex') {
+                const cb = labelEl.querySelector('input');
+                setTimeout(() => {
+                    if (cb.checked) labelEl.classList.add('selected');
+                    else labelEl.classList.remove('selected');
+                }, 10);
+            }
+        }
+
+        function saveAnswer(val) {
+            userAnswers[currentQuizIndex] = val;
+        }
+
+        function saveComplexAnswer() {
+            const checkboxes = document.querySelectorAll(`input[name="q${currentQuizIndex}"]:checked`);
+            const vals = Array.from(checkboxes).map(cb => parseInt(cb.value));
+            userAnswers[currentQuizIndex] = vals;
+        }
+
+        function saveMatchingAnswer() {
+            const selects = document.querySelectorAll('.matching-select');
+            let vals = [];
+            selects.forEach(sel => {
+                vals.push(sel.value === "" ? "" : parseInt(sel.value));
+            });
+            userAnswers[currentQuizIndex] = vals;
+        }
+
+        function nextQuestion() {
+            if (!isAnswered(currentQuizIndex)) {
+                showModal('Belum Dijawab', 'Silakan jawab pertanyaan ini terlebih dahulu sebelum melanjutkan.', 'warning');
+                return;
+            }
+            if (currentQuizIndex < quizData.length - 1) {
+                currentQuizIndex++;
+                renderQuestion();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuizIndex > 0) {
+                currentQuizIndex--;
+                renderQuestion();
+            }
+        }
+
+        function isAnswered(index) {
+            const ans = userAnswers[index];
+            if (ans === null || ans === undefined) return false;
+            
+            if (quizData[index].type === 'complex_mcq') {
+                return ans.length > 0;
+            } else if (quizData[index].type === 'matching') {
+                return !ans.includes("");
+            }
+            return true;
+        }
+
+        function submitQuiz() {
+            if (!isAnswered(currentQuizIndex)) {
+                showModal('Belum Dijawab', 'Silakan lengkapi soal terakhir ini sebelum mengumpulkan kuis.', 'warning');
+                return;
+            }
+            
+            // Hitung Skor
+            let correctCount = 0;
+            const answersSummary = [];
+
+            quizData.forEach((q, idx) => {
+                const userAns = userAnswers[idx];
+                let isCorrect = false;
+                let ansText = "";
+                
+                if (q.type === 'mcq' || q.type === 'tf') {
+                    isCorrect = userAns === q.correct;
+                    ansText = q.options[userAns] || '-';
+                } else if (q.type === 'complex_mcq') {
+                    if (userAns && userAns.length === q.correct.length) {
+                        const sortedUser = [...userAns].sort();
+                        const sortedCorrect = [...q.correct].sort();
+                        isCorrect = sortedUser.every((v, i) => v === sortedCorrect[i]);
+                    }
+                    ansText = userAns ? userAns.map(v => q.options[v]).join('; ') : '-';
+                } else if (q.type === 'matching') {
+                    isCorrect = true;
+                    let pairsText = [];
+                    q.pairs.forEach((p, i) => {
+                        const selectedIdx = userAns ? userAns[i] : "";
+                        if (selectedIdx !== p.correctRight) isCorrect = false;
+                        const rightVal = (selectedIdx !== "" && selectedIdx !== undefined) ? p.rightOptions[selectedIdx] : '-';
+                        pairsText.push(`${p.left}: ${rightVal}`);
+                    });
+                    ansText = pairsText.join(' | ');
+                }
+
+                if (isCorrect) correctCount++;
+
+                answersSummary.push({
+                    no: idx + 1,
+                    userAnswer: ansText,
+                    status: isCorrect ? 'Benar' : 'Salah'
+                });
+            });
+            
+            quizScore = (correctCount / 10) * 100;
+            
+            // Tampilkan Hasil di Layar
+            document.getElementById('result-student-info').innerText = `${studentData.name} - ${studentData.class}`;
+            document.getElementById('result-score').innerText = quizScore;
+            
+            const circle = document.getElementById('result-score');
+            const msg = document.getElementById('result-message');
+            
+            if (quizScore >= 80) {
+                circle.style.borderColor = "var(--success)";
+                circle.style.color = "var(--success)";
+                msg.innerHTML = "Mumtaz! Luar Biasa! 🌟<br><span style='font-size:1rem; color:#555;'>Kamu sangat memahami materi strategi dakwah ini.</span>";
+            } else if (quizScore >= 60) {
+                circle.style.borderColor = "var(--warning)";
+                circle.style.color = "#F57F17";
+                msg.innerHTML = "Bagus! Terus Tingkatkan! 👍<br><span style='font-size:1rem; color:#555;'>Pemahamanmu sudah baik, pelajari lagi pembahasannya ya.</span>";
+            } else {
+                circle.style.borderColor = "var(--danger)";
+                circle.style.color = "var(--danger)";
+                msg.innerHTML = "Tetap Semangat Belajar! 💪<br><span style='font-size:1rem; color:#555;'>Jangan menyerah, ayo baca lagi materinya.</span>";
+            }
+            
+            navTo('screen-result');
+
+            // --- PENGIRIMAN DATA KE GOOGLE APPS SCRIPT (DATABASE SPREADSHEET) ---
+            const syncStatusEl = document.getElementById('sync-status-msg');
+            
+            if (GAS_WEB_APP_URL && GAS_WEB_APP_URL !== "ISI_URL_GOOGLE_APPS_SCRIPT_DI_SINI") {
+                syncStatusEl.innerText = "⏳ Menyimpan hasil pengerjaan ke database guru...";
+                
+                const payload = {
+                    action: "submit_result",
+                    timestamp: new Date().toLocaleString('id-ID', { timeZone: 'Asia/Makassar' }),
+                    name: studentData.name,
+                    class: studentData.class,
+                    score: quizScore,
+                    correctCount: correctCount,
+                    wrongCount: 10 - correctCount,
+                    answers: answersSummary
+                };
+
+                fetch(GAS_WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                })
+                .then(() => {
+                    syncStatusEl.innerText = "✅ Hasil pengerjaan berhasil tersimpan di Spreadsheet Guru!";
+                    syncStatusEl.style.color = "var(--success)";
+                })
+                .catch(err => {
+                    console.error("Gagal mengirim ke GAS:", err);
+                    syncStatusEl.innerText = "⚠️ Gagal tersambung ke spreadsheet. Hasil tetap dapat dilihat secara lokal.";
+                    syncStatusEl.style.color = "var(--danger)";
+                });
+            } else {
+                syncStatusEl.innerText = "ℹ️ Mode Lokal (Belum terhubung ke URL Google Apps Script)";
+            }
+        }
+
+        function showDiscussion() {
+            let html = '';
+            
+            quizData.forEach((q, idx) => {
+                const userAns = userAnswers[idx];
+                let isCorrect = false;
+                let userAnsText = "";
+                let correctAnsText = "";
+                
+                if (q.type === 'mcq' || q.type === 'tf') {
+                    isCorrect = userAns === q.correct;
+                    userAnsText = q.options[userAns];
+                    correctAnsText = q.options[q.correct];
+                } else if (q.type === 'complex_mcq') {
+                    const sortedUser = [...userAns].sort();
+                    const sortedCorrect = [...q.correct].sort();
+                    isCorrect = (userAns.length === q.correct.length) && sortedUser.every((v, i) => v === sortedCorrect[i]);
+                    
+                    userAnsText = "<ul>" + userAns.map(v => `<li>${q.options[v]}</li>`).join('') + "</ul>";
+                    correctAnsText = "<ul>" + q.correct.map(v => `<li>${q.options[v]}</li>`).join('') + "</ul>";
+                } else if (q.type === 'matching') {
+                    isCorrect = true;
+                    userAnsText = "<ul>";
+                    correctAnsText = "<ul>";
+                    q.pairs.forEach((p, i) => {
+                        if (userAns[i] !== p.correctRight) isCorrect = false;
+                        userAnsText += `<li>${p.left} &rarr; ${p.rightOptions[userAns[i]] || '-'}</li>`;
+                        correctAnsText += `<li>${p.left} &rarr; ${p.rightOptions[p.correctRight]}</li>`;
+                    });
+                    userAnsText += "</ul>";
+                    correctAnsText += "</ul>";
+                }
+
+                const statusClass = isCorrect ? 'correct' : 'wrong';
+                const statusBadge = isCorrect ? '<span style="color:var(--success); font-weight:bold;">Benar</span>' : '<span style="color:var(--danger); font-weight:bold;">Salah</span>';
+
+                html += `
+                    <div class="discussion-item ${statusClass}">
+                        <div style="font-weight:bold; margin-bottom:10px;">Soal ${idx + 1} (${statusBadge})</div>
+                        <div style="margin-bottom:10px;">${q.question}</div>
+                        <div class="discuss-ans">
+                            <strong>Jawaban Kamu:</strong><br>${userAnsText}
+                        </div>
+                        ${!isCorrect ? `
+                        <div class="discuss-ans" style="background:#E8F5E9; margin-top:5px;">
+                            <strong>Kunci Jawaban:</strong><br>${correctAnsText}
+                        </div>` : ''}
+                        <div class="discuss-reason">
+                            <strong>Penjelasan:</strong> ${q.discussion}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('discussion-container').innerHTML = html;
+            navTo('screen-discussion');
+        }
+
+    </script>
+</body>
+</html>
